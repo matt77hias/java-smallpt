@@ -21,7 +21,7 @@ class SmallPT {
 
         for (int y = 0; y < h; ++y) {
             // pixel row
-        	String slog = String.format("\rRendering (%1$d spp) %2$.2f%%", nb_samples * 4, 100.0 * y / (h - 1), args);
+        	String slog = String.format("\rRendering (%1$d spp) %2$.2f%%", nb_samples * 4, 100.0 * y / (h - 1));
             System.out.print(slog);
             for (int x = 0; x < w; ++x) { 
             	// pixel column
