@@ -129,7 +129,7 @@ class SmallPT {
                         Vector3 u = (Math.abs(w.x) > 0.1 ? new Vector3(0.0, 1.0, 0.0) : new Vector3(1.0, 0.0, 0.0)).cross(w).normalize();
                         Vector3 v = w.cross(u);
 
-                        Vector3 sample_d = Sampling.uniformSampleOnHemisphere(rng.uniformFloat(), rng.uniformFloat());
+                        Vector3 sample_d = Sampling.cosineWeightedSampleOnHemisphere(rng.uniformFloat(), rng.uniformFloat());
                         Vector3 d = Vector3.add(Vector3.add(Vector3.mul(sample_d.x, u), Vector3.mul(sample_d.y, v)), Vector3.mul(sample_d.z, w)).normalize();
                         r = new Ray(p, d, Sphere.EPSILON_SPHERE, Double.POSITIVE_INFINITY, r.depth + 1);
                         break;
