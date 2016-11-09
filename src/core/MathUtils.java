@@ -12,7 +12,7 @@ public class MathUtils {
         return (x < high) ? ((x > low) ? x : low) : high;
     }
 
-    public static byte toByte(double x, double gamma) {
-        return (byte)clamp(255.0 * Math.pow(x, 1 / gamma), 0.0, 255.0);
+    public static int toByte(double x, double gamma) {
+        return (int)clamp(255.0 * Math.pow(x, 1 / gamma), 0.0, 255.0);
     }
 }
