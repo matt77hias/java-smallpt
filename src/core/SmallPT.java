@@ -30,7 +30,7 @@ class SmallPT {
                     for (int sx = 0; sx < 2; ++sx) { 
                     	// 2 subpixel column
                         Vector3 L = new Vector3();
-                        for (int s = 0; s < nb_samples; s++) {
+                        for (int s = 0; s < nb_samples; ++s) {
                             // samples per subpixel
                             final double u1 = 2.0 * rng.uniformFloat();
                             final double u2 = 2.0 * rng.uniformFloat();
