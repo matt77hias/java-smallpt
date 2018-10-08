@@ -194,11 +194,11 @@ public class Vector3 {
         return (this.x > this.y && this.x > this.z) ? this.x : ((this.y > this.z) ? this.y : this.z);
     }
     
-    public double norm2_squared() { 
+    public double norm2Squared() { 
 	    return this.x * this.x + this.y * this.y + this.z * this.z;
     }
     public double norm2() { 
-	    return Math.sqrt(norm2_squared());
+	    return Math.sqrt(norm2Squared());
     }
     public Vector3 normalize() {
         final double a = 1.0 / norm2();
