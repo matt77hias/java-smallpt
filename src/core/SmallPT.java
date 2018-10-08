@@ -1,53 +1,6 @@
 package core;
 
 class SmallPT {
-    
-	public static void main(String[] args) {
-        RNG rng = new RNG(606418532);
-        final int nb_samples = (args.length > 0) ? Integer.parseInt(args[0]) / 4 : 1;
-
-        final int w = 1024;
-        final int h = 768;
-
-        Vector3 eye = new Vector3(50, 52, 295.6);
-        Vector3 gaze = new Vector3(0, -0.042612, -1).normalize();
-        final double fov = 0.5135;
-        Vector3 cx = new Vector3(w * fov / h, 0.0, 0.0);
-        Vector3 cy = Vector3.mul(cx.cross(gaze).normalize(), fov);
-
-        Vector3[] Ls = new Vector3[w * h];
-        for (int i = 0; i < w * h; ++i)
-            Ls[i] = new Vector3();
-
-        for (int y = 0; y < h; ++y) {
-            // pixel row
-        	String slog = String.format("\rRendering (%1$d spp) %2$.2f%%", nb_samples * 4, 100.0 * y / (h - 1));
-            System.out.print(slog);
-            for (int x = 0; x < w; ++x) { 
-            	// pixel column
-                for (int sy = 0, i = (h - 1 - y) * w + x; sy < 2; ++sy) { 
-                	// 2 subpixel row
-                    for (int sx = 0; sx < 2; ++sx) { 
-                    	// 2 subpixel column
-                        Vector3 L = new Vector3();
-                        for (int s = 0; s < nb_samples; ++s) {
-                            // samples per subpixel
-                            final double u1 = 2.0 * rng.uniformFloat();
-                            final double u2 = 2.0 * rng.uniformFloat();
-                            final double dx = u1 < 1 ? Math.sqrt(u1) - 1.0 : 1.0 - Math.sqrt(2.0 - u1);
-                            final double dy = u2 < 1 ? Math.sqrt(u2) - 1.0 : 1.0 - Math.sqrt(2.0 - u2);
-                            Vector3 d = Vector3.add(Vector3.add(Vector3.mul(cx, (((sx + 0.5 + dx) / 2 + x) / w - 0.5)),
-                            									Vector3.mul(cy, (((sy + 0.5 + dy) / 2 + y) / h - 0.5))), gaze);
-                            L = Vector3.add(L, Vector3.div(radiance(new Ray(Vector3.add(eye, Vector3.mul(d, 130)), d.normalize(), Sphere.EPSILON_SPHERE), rng), nb_samples));
-                        }
-                        Ls[i] = Vector3.add(Ls[i], Vector3.mul(0.25, Vector3.clamp(L, 0.0, 1.0)));
-                    }
-                }
-            }
-        }
-
-        ImageIO.writePPM(w, h, Ls, "java-image.ppm");
-    }
 
     // Scene
     public static final double REFRACTIVE_INDEX_OUT = 1.0;
@@ -136,5 +89,52 @@ class SmallPT {
                     }
             }
         }
+    }
+	
+	public static void main(String[] args) {
+        RNG rng = new RNG(606418532);
+        final int nb_samples = (args.length > 0) ? Integer.parseInt(args[0]) / 4 : 1;
+
+        final int w = 1024;
+        final int h = 768;
+
+        Vector3 eye = new Vector3(50, 52, 295.6);
+        Vector3 gaze = new Vector3(0, -0.042612, -1).normalize();
+        final double fov = 0.5135;
+        Vector3 cx = new Vector3(w * fov / h, 0.0, 0.0);
+        Vector3 cy = Vector3.mul(cx.cross(gaze).normalize(), fov);
+
+        Vector3[] Ls = new Vector3[w * h];
+        for (int i = 0; i < w * h; ++i)
+            Ls[i] = new Vector3();
+
+        for (int y = 0; y < h; ++y) {
+            // pixel row
+        	String slog = String.format("\rRendering (%1$d spp) %2$.2f%%", nb_samples * 4, 100.0 * y / (h - 1));
+            System.out.print(slog);
+            for (int x = 0; x < w; ++x) { 
+            	// pixel column
+                for (int sy = 0, i = (h - 1 - y) * w + x; sy < 2; ++sy) { 
+                	// 2 subpixel row
+                    for (int sx = 0; sx < 2; ++sx) { 
+                    	// 2 subpixel column
+                        Vector3 L = new Vector3();
+                        for (int s = 0; s < nb_samples; ++s) {
+                            // samples per subpixel
+                            final double u1 = 2.0 * rng.uniformFloat();
+                            final double u2 = 2.0 * rng.uniformFloat();
+                            final double dx = u1 < 1 ? Math.sqrt(u1) - 1.0 : 1.0 - Math.sqrt(2.0 - u1);
+                            final double dy = u2 < 1 ? Math.sqrt(u2) - 1.0 : 1.0 - Math.sqrt(2.0 - u2);
+                            Vector3 d = Vector3.add(Vector3.add(Vector3.mul(cx, (((sx + 0.5 + dx) / 2 + x) / w - 0.5)),
+                            									Vector3.mul(cy, (((sy + 0.5 + dy) / 2 + y) / h - 0.5))), gaze);
+                            L = Vector3.add(L, Vector3.div(radiance(new Ray(Vector3.add(eye, Vector3.mul(d, 130)), d.normalize(), Sphere.EPSILON_SPHERE), rng), nb_samples));
+                        }
+                        Ls[i] = Vector3.add(Ls[i], Vector3.mul(0.25, Vector3.clamp(L, 0.0, 1.0)));
+                    }
+                }
+            }
+        }
+
+        ImageIO.writePPM(w, h, Ls, "java-image.ppm");
     }
 }
