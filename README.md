@@ -1,11 +1,9 @@
-[![Build status][s1]][tr] [![Code Quality][s2]][co] [![License][s3]][li]
+[![Build status][s1]][tr] [![License][s2]][li]
 
 [s1]: https://travis-ci.org/matt77hias/java-smallpt.svg?branch=master
-[s2]: https://api.codacy.com/project/badge/Grade/4254c51342eb444680c416cdf2a44250
-[s3]: https://img.shields.io/badge/license-MIT-blue.svg
+[s2]: https://img.shields.io/badge/license-MIT-blue.svg
 
 [tr]: https://travis-ci.org/matt77hias/java-smallpt
-[co]: https://www.codacy.com/app/matt77hias/java-smallpt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matt77hias/java-smallpt&amp;utm_campaign=Badge_Grade
 [li]: https://raw.githubusercontent.com/matt77hias/java-smallpt/master/LICENSE.txt
 
 # java-smallpt
